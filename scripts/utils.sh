@@ -24,8 +24,10 @@ is_cmd_exists() {
 }
 
 copy_to_clipboard() {
-  if [[ "$(uname)" == "Darwin" ]] && is_cmd_exists "pbcopy"; then
-    echo -n "$1" | pbcopy
+  # if [[ "$(uname)" == "Darwin" ]] && is_cmd_exists "pbcopy"; then
+  #   echo -n "$1" | pbcopy
+  if [[ "$(uname)" == "Darwin" ]] && is_cmd_exists "tmux"; then
+    echo -n "$1" | tmux load-buffer -
   elif [[ "$(uname)" == "Linux" ]] && is_cmd_exists "tmux"; then
     echo -n "$1" | tmux load-buffer -
   elif [[ "$(uname)" == "Linux" ]] && is_cmd_exists "xclip"; then
