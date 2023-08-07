@@ -9,12 +9,6 @@ OPT_HIDE_PREVIEW="$(get_tmux_option "@pass-hide-preview" "off")"
 OPT_HIDE_PW_FROM_PREVIEW="$(get_tmux_option "@pass-hide-pw-from-preview" "off")"
 spinner_pid=""
 
-if [[ -f '/opt/homebrew/opt/fzf/bin/fzf' ]]; then
-  fzf='/opt/homebrew/opt/fzf/bin/fzf'
-elif [ -f '~/.fzf/bin/fzf' ]; then
-  fzf='~/.fzf/bin/fzf'
-fi
-
 # ------------------------------------------------------------------------------
 
 # Taken from:
@@ -105,16 +99,30 @@ main() {
   items="$(get_items)"
   spinner_stop
 
-  sel="$(echo "$items" | \
-    fzf \
-      --inline-info --no-multi \
-      --tiebreak=begin \
-      --preview="$preview_cmd" \
-      $preview_hidden \
-      --bind=tab:toggle-preview \
-      --header="$header" \
-      --bind=alt-enter:accept \
-      --expect=enter,ctrl-e,ctrl-d,ctrl-c,esc,alt-enter)"
+  if [[ -f '/opt/homebrew/opt/fzf/bin/fzf' ]]; then
+
+    sel="$(echo "$items" | \
+      /opt/homebrew/opt/fzf/bin/fzf \
+        --inline-info --no-multi \
+        --tiebreak=begin \
+        --preview="$preview_cmd" \
+        $preview_hidden \
+        --bind=tab:toggle-preview \
+        --header="$header" \
+        --bind=alt-enter:accept \
+        --expect=enter,ctrl-e,ctrl-d,ctrl-c,esc,alt-enter)"
+    else
+    sel="$(echo "$items" | \
+      ~/.fzf/bin/fzf \
+        --inline-info --no-multi \
+        --tiebreak=begin \
+        --preview="$preview_cmd" \
+        $preview_hidden \
+        --bind=tab:toggle-preview \
+        --header="$header" \
+        --bind=alt-enter:accept \
+        --expect=enter,ctrl-e,ctrl-d,ctrl-c,esc,alt-enter)"
+fi
 
   if [ $? -gt 0 ]; then
     echo "error: unable to complete command - check/report errors above"
