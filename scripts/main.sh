@@ -9,12 +9,6 @@ OPT_HIDE_PREVIEW="$(get_tmux_option "@pass-hide-preview" "off")"
 OPT_HIDE_PW_FROM_PREVIEW="$(get_tmux_option "@pass-hide-pw-from-preview" "off")"
 spinner_pid=""
 
-if [[ -f '/opt/homebrew/opt/fzf/bin/fzf' ]]; then
- alias fzf='/opt/homebrew/opt/fzf/bin/fzf'
-elif [ -f '~/.fzf/bin/fzf' ]; then
-  alias fzf='~/.fzf/bin/fzf'
-fi
-
 # ------------------------------------------------------------------------------
 
 # Taken from:
