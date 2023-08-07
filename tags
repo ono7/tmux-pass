@@ -53,6 +53,8 @@ Using [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm)	README.md	/^###
 clear_clipboard	scripts/utils.sh	/^clear_clipboard() {$/;"	f
 copy_to_clipboard	scripts/utils.sh	/^copy_to_clipboard() {$/;"	f
 display_message	scripts/utils.sh	/^display_message() {$/;"	f
+fzf	scripts/main.sh	/^  alias fzf='~\/.fzf\/bin\/fzf'$/;"	a
+fzf	scripts/main.sh	/^ alias fzf='\/opt\/homebrew\/opt\/fzf\/bin\/fzf'$/;"	a
 get_items	scripts/main.sh	/^get_items() {$/;"	f
 get_login	scripts/main.sh	/^get_login() {$/;"	f
 get_password	scripts/main.sh	/^get_password() {$/;"	f
