@@ -111,7 +111,7 @@ main() {
         --header="$header" \
         --bind=alt-enter:accept \
         --expect=enter,ctrl-e,ctrl-d,ctrl-c,esc,alt-enter)"
-    else
+  elif [[ -f ~/.fzf/bin/fzf ]]; then
     sel="$(echo "$items" | \
       ~/.fzf/bin/fzf \
         --inline-info --no-multi \
@@ -122,6 +122,9 @@ main() {
         --header="$header" \
         --bind=alt-enter:accept \
         --expect=enter,ctrl-e,ctrl-d,ctrl-c,esc,alt-enter)"
+    else
+      echo "${0} FZF NOT FOUND IN PATH" && exit 1
+
 fi
 
   if [ $? -gt 0 ]; then
