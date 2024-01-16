@@ -24,10 +24,10 @@ is_cmd_exists() {
 }
 
 copy_to_clipboard() {
-  # if [[ "$(uname)" == "Darwin" ]] && is_cmd_exists "pbcopy"; then
-  #   echo -n "$1" | pbcopy
-  if [[ "$(uname)" == "Darwin" ]] && is_cmd_exists "tmux"; then
-    echo -n "$1" | tmux load-buffer -
+  if [[ "$(uname)" == "Darwin" ]] && is_cmd_exists "pbcopy"; then
+    echo -n "$1" | pbcopy
+  elif [[ -f '/etc/wsl.conf' ]] && is_cmd_exists "win32yank.exe"; then
+    echo -n "$1" | win32yank.exe -i --crlf
   elif [[ "$(uname)" == "Linux" ]] && is_cmd_exists "tmux"; then
     echo -n "$1" | tmux load-buffer -
   elif [[ "$(uname)" == "Linux" ]] && is_cmd_exists "xclip"; then
@@ -42,6 +42,8 @@ clear_clipboard() {
 
   if [[ "$(uname)" == "Darwin" ]] && is_cmd_exists "pbcopy"; then
     tmux run-shell -b "sleep $SEC && echo '' | pbcopy"
+  elif [[ -f '/etc/wsl.conf' ]] && is_cmd_exists "win32yank.exe"; then
+    echo -n "" | win32yank.exe -i --crlf
   elif [[ "$(uname)" == "Linux" ]] && is_cmd_exists "xsel"; then
     tmux run-shell -b "sleep $SEC && xsel -c -b"
   elif [[ "$(uname)" == "Linux" ]] && is_cmd_exists "xclip"; then
